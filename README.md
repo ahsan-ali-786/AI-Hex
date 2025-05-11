@@ -2,7 +2,7 @@
 
 A Python implementation of the classic board game Hex with bonus moves and obstacle features.
 
-![Hex Game Screenshot](https://github.com/ahsan-ali-786/AI-Hex/image.png)
+![Hex Game Screenshot](https://raw.githubusercontent.com/ahsan-ali-786/AI-Hex/main/image.png)
 
 ## Table of Contents
 
@@ -48,7 +48,7 @@ cd AI-Hex
 2. Install dependencies:
 
 ```bash
-pip install pygame, numpy
+pip install pygame numpy
 ```
 
 3. Run the game:
