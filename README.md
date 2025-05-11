@@ -2,7 +2,7 @@
 
 A Python implementation of the classic board game Hex with bonus moves and obstacle features.
 
-![Hex Game Screenshot](https://github.com/ahsan-ali-786/AI-Hex/main/image.png)
+![Hex Game Screenshot](https://github.com/ahsan-ali-786/AI-Hex/blob/main/image.png)
 
 ## Table of Contents
 
