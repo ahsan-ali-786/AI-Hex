@@ -24,7 +24,7 @@ INFO_PANEL_COLOR = (240, 240, 240)
 TEXT_COLOR = (0, 0, 0)
 
 # Board Settings
-ROWS, COLS = 8, 8  # Slightly smaller board for better gameplay
+ROWS, COLS = 11, 11  # Slightly smaller board for better gameplay
 HEX_RADIUS = 25  # Size of hexagons
 BOARD_OFFSET_X = 100
 BOARD_OFFSET_Y = 100

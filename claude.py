@@ -18,7 +18,7 @@ BACKGROUND_COLOR = (255, 255, 255)
 HEX_COLOR = (255, 255, 255)  # White hexagons
 BORDER_COLOR = (0, 0, 0)  # Black borders
 PLAYER_COLORS = [(255, 0, 0), (0, 0, 255)]  # Red and Blue players
-PLAYER_NAMES = ["Human", "AI"]
+PLAYER_NAMES = ["Red", "Blue"]
 HIGHLIGHT_COLOR = (255, 255, 0)  # Yellow highlight for path
 INFO_PANEL_COLOR = (240, 240, 240)
 TEXT_COLOR = (0, 0, 0)
@@ -155,10 +155,6 @@ def get_neighbors(row, col):
     
     return neighbors
 
-def check_draw():
-    available_cells = ROWS * COLS - len(obstacles) - len(hex_states)
-    return available_cells == 0
-
 # Function to check if a player has won
 def check_win():
     # For Red player (top to bottom)
@@ -170,6 +166,11 @@ def check_win():
         return 1  # Blue wins
     
     return None
+
+# Function to check if the board is full (draw condition)
+def check_draw():
+    available_cells = ROWS * COLS - len(obstacles) - len(hex_states)
+    return available_cells == 0
 
 # BFS to check if player has a connected path
 def has_path(start_edge, end_edge):
@@ -244,6 +245,7 @@ def draw_info_panel():
         "- Red connects from top to bottom",
         "- Blue connects from left to right",
         "- First player to form a continuous path wins",
+        "- If board fills up with no winner, it's a draw",
         "- Obstacles cannot be occupied",
         "",
         "Bonus Move:",
@@ -284,15 +286,14 @@ def draw_info_panel():
     
     # Game status
     if game_over:
-        status = None;
-        if winner:
+        if winner is not None:
             status = font.render(f"Game Over! {PLAYER_NAMES[winner]} wins!", True, PLAYER_COLORS[winner])
         else:
-            status = font.render(f"Game Over! It's a Draw!", True, "black")
+            status = font.render("Game Over! It's a draw!", True, TEXT_COLOR)
         screen.blit(status, (INFO_PANEL_X + 20, y_offset + 80))
 
-# Draw winner dialog
-def draw_winner_dialog():
+# Draw winner or draw dialog
+def draw_game_end_dialog():
     dialog_width, dialog_height = 400, 200
     dialog_x = (WIDTH - dialog_width) // 2
     dialog_y = (HEIGHT - dialog_height) // 2
@@ -305,14 +306,13 @@ def draw_winner_dialog():
     pygame.draw.rect(screen, BORDER_COLOR, 
                     (dialog_x, dialog_y, dialog_width, dialog_height), 3)
     
-    # Winner text
-    output_text = "";
-    if winner == None:
-        output_text = large_font.render(f"Its a Draw!", True, "black")
+    # Result text
+    if winner is not None:
+        result_text = large_font.render(f"{PLAYER_NAMES[winner]} WINS!", True, PLAYER_COLORS[winner])
     else:
-        output_text = large_font.render(f"{PLAYER_NAMES[winner]} WINS!", True, PLAYER_COLORS[winner])
-    text_rect = output_text.get_rect(center=(dialog_x + dialog_width//2, dialog_y + 70))
-    screen.blit(output_text, text_rect)
+        result_text = large_font.render("IT'S A DRAW!", True, TEXT_COLOR)
+    text_rect = result_text.get_rect(center=(dialog_x + dialog_width//2, dialog_y + 70))
+    screen.blit(result_text, text_rect)
     
     # Instruction text
     instruction = font.render("Press 'R' to restart or 'ESC' to quit", True, TEXT_COLOR)
@@ -491,6 +491,7 @@ def restart_game():
     game_over = False
     winner = None
     TURN = 0
+    # Fix bug with bonus_move_counter - ensure it gets a new random value
     bonus_move_counter = random.randint(1, 5)
     bonus_move_active = False
     bonus_player = None
@@ -501,9 +502,9 @@ while running:
     hex_positions = generate_board()
     draw_info_panel()
     
-    # If game is over, draw winner dialog
+    # If game is over, draw game end dialog
     if game_over:
-        draw_winner_dialog()
+        draw_game_end_dialog()
     
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -528,12 +529,15 @@ while running:
                     winner = check_win()
                     if winner is not None:
                         game_over = True
+                    # Check for draw (if board is full)
                     elif check_draw():
                         game_over = True
                         winner = None  # Draw condition
                     else:
                         # Handle bonus move logic
                         if bonus_move_active:
+                            # Fix bug - generate a new random bonus_move_counter
+                            # Don't use random.seed() as it can produce the same result
                             bonus_move_counter = random.randint(1, 5)
                             bonus_move_active = False
                             TURN = 1 - bonus_player  # Next turn after bonus
@@ -556,12 +560,14 @@ while running:
             winner = check_win()
             if winner is not None:
                 game_over = True
+            # Check for draw (if board is full)
             elif check_draw():
                 game_over = True
                 winner = None  # Draw condition
             else:
                 # Handle bonus move logic
                 if bonus_move_active:
+                    # Fix bug - generate a new random bonus_move_counter
                     bonus_move_counter = random.randint(1, 5)
                     bonus_move_active = False
                     TURN = 1 - bonus_player  # Next turn after bonus
