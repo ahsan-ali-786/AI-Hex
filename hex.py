@@ -457,7 +457,7 @@ def alpha_beta_search(depth, player):
 
 def ai_make_move():
     """AI makes a move using alpha-beta pruning"""
-    depth = 2  # Adjust depth based on performance
+    depth = 4  # Adjust depth based on performance
     move = alpha_beta_search(depth, AI_PLAYER)
     
     if move:

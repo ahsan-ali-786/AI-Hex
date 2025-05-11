@@ -2,7 +2,7 @@
 
 A Python implementation of the classic board game Hex with bonus moves and obstacle features.
 
-![Hex Game Screenshot](https://github.com/yourname/hex-game/raw/main/screenshots/gameplay.png)
+![Hex Game Screenshot](https://github.com/ahsan-ali-786/AI-Hex/image.png)
 
 ## Table of Contents
 
@@ -15,7 +15,6 @@ A Python implementation of the classic board game Hex with bonus moves and obsta
 - [Controls](#controls)
 - [AI Implementation](#ai-implementation)
 - [Customization](#customization)
-- [License](#license)
 
 ## Description
 
@@ -42,20 +41,20 @@ Hex is a strategy board game played on a hexagonal grid. This implementation fea
 1. Clone the repository:
 
 ```bash
-git clone https://github.com/yourname/hex-game.git
-cd hex-game
+git clone https://github.com/ahsan-ali-786/AI-Hex.git
+cd AI-Hex
 ```
 
 2. Install dependencies:
 
 ```bash
-pip install pygame
+pip install pygame, numpy
 ```
 
 3. Run the game:
 
 ```bash
-python hex_game.py
+python hex.py
 ```
 
 ## How to Play
@@ -104,10 +103,6 @@ To customize the game's appearance:
 - Modify the color constants at the beginning of the code
 - Replace the default obstacle image with your own by placing an "obstacle.png" file in the same directory
 
-## License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
-
 ---
 
-Created by [Your Name]
+Created by [ahsan-ali-786, SyedAbdullah10]
